@@ -109,6 +109,9 @@ public class Renderer extends Canvas {
 		frame.dispose();
 	}
 	
+	/*
+	*	draw the given tile at the row/column position given
+	*/
 	private void renderTile(GameTile tile, int row, int column, Graphics g) {
 		int tileNumber = tile.getTile();
 		
@@ -130,9 +133,6 @@ public class Renderer extends Canvas {
 	}
 	
 	private void loadImages() {
-		//	backGroundImage = Toolkit.getDefaultToolkit().getImage("images/board.png");
-		//	tileSheetImage = Toolkit.getDefaultToolkit().getImage("images/tiles.png");
-		//	whiteBackGroundImage = Toolkit.getDefaultToolkit().getImage("images/whiteboard.png");
 		InputStream input1 = this.getClass().getClassLoader().getResourceAsStream("board.png");
 		InputStream input2 = getClass().getResourceAsStream("tiles.png");
 		InputStream input3 = getClass().getResourceAsStream("whiteboard.png");

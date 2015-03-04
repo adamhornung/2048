@@ -1,12 +1,12 @@
 import java.util.Random;
 
 public class Board {
-	public static final int BOARD_SIZE = 4;
+	public static final int BOARD_SIZE = 4; // how many tiles are in each row and column
 	public enum Commands { NONE, INIT, MOVE_UP, MOVE_DOWN, MOVE_RIGHT, MOVE_LEFT, QUIT };
 	
 	private GameTile[][] tileArray = new GameTile[BOARD_SIZE][BOARD_SIZE];
-	private static boolean randomFours = false;
-	private int score;
+	private static boolean randomFours = false; // if false, new tiles will all be 2. if true, new tiles are 2 or 4
+	private int score; // player's overall score
 	
 	public Board() {
 		score = 0;
@@ -28,6 +28,10 @@ public class Board {
 		return randomFours;
 	}
 	
+	/*
+	*	returns true if the player lost the game
+	*	returns false if a space on the board is empty and the player can continue
+	*/
 	public boolean checkLose() {
 		// check for empty spaces
 		for(int i = 0; i < BOARD_SIZE; i++)
@@ -54,6 +58,11 @@ public class Board {
 		return score;
 	}
 	
+	/*
+	*	execute various events
+	*	initialize event: reset the board and score for a new game
+	*	movement event: move the tiles to the appropriate side
+	*/
 	public void execute(Commands command) {
 		if(!Game.paused) {
 			int moveScore = -1;
@@ -71,6 +80,7 @@ public class Board {
 				default:
 			}
 			
+			// add a new piece if a valid move was made
 			if(moveScore >= 0) {
 				Random rand = new Random();
 				if(randomFours && rand.nextInt(2) == 1)
@@ -85,6 +95,9 @@ public class Board {
 		}
 	}
 	
+	/*
+	*	reset the board to have two "2" tiles and one "4" tile randomly placed
+	*/
 	public void initialize() {
 		for(int i = 0; i < BOARD_SIZE; i++)
 			for(int j = 0; j< BOARD_SIZE; j++)
@@ -95,10 +108,14 @@ public class Board {
 		newPiece(4);
 	}
 	
+	/*
+	*	creates a new tile with the given value on the board in an empty spot
+	*/
 	private void newPiece(int number) {
 		int[] empties = new int[BOARD_SIZE*BOARD_SIZE];
 		int counter = 0;
 		
+		// find all of the empty spaces on the board
 		for(int i = 0; i < BOARD_SIZE; i++)
 			for(int j = 0; j< BOARD_SIZE; j++)
 				if(tileArray[i][j].getValue() == 0) {
@@ -106,6 +123,7 @@ public class Board {
 					counter++;
 				}
 
+		//put a new tile on the board
 		if(counter != 0) {
 			Random rand = new Random();
 			int n = empties[rand.nextInt(counter)];
@@ -114,12 +132,22 @@ public class Board {
 		}
 	}
 	
+	/*
+	*	cycles through all tiles on the board and animates the tiles
+	*/
 	public void updateTileSizes() {
 		for(int i = 0; i < BOARD_SIZE; i++)
 			for(int j = 0; j< BOARD_SIZE; j++)
 				tileArray[i][j].updateSize();
 	}
 	
+	/*
+	*	move up event combines tiles and moves all tiles to the top of the board
+	*	return values
+	*		-1: requested move is not valid
+	*		0: a valid move is made, but no tiles were combined
+	*		>0: a valid move is made, and tiles were combined to add to the overall score
+	*/
 	private int moveUp() {
 		int score = -1;
 		for (int j = 0; j < BOARD_SIZE; j++) {
@@ -168,7 +196,14 @@ public class Board {
 
 		return score;
 	}
-	
+
+	/*
+	*	move down event combines tiles and moves all tiles to the bottom of the board
+	*	return values
+	*		-1: requested move is not valid
+	*		0: a valid move is made, but no tiles were combined
+	*		>0: a valid move is made, and tiles were combined to add to the overall score
+	*/	
 	private int moveDown() {
 		int score = -1;
 		for (int j = 0; j < BOARD_SIZE; j++) {
@@ -218,6 +253,13 @@ public class Board {
 		return score;
 	}
 	
+	/*
+	*	move left event combines tiles and moves all tiles to the left side of the board
+	*	return values
+	*		-1: requested move is not valid
+	*		0: a valid move is made, but no tiles were combined
+	*		>0: a valid move is made, and tiles were combined to add to the overall score
+	*/	
 	private int moveLeft() {
 		int score = -1;
 		for (int i = 0; i < BOARD_SIZE; i++) {
@@ -267,6 +309,13 @@ public class Board {
 		return score;
 	}
 	
+		/*
+	*	move right event combines tiles and moves all tiles to the right side of the board
+	*	return values
+	*		-1: requested move is not valid
+	*		0: a valid move is made, but no tiles were combined
+	*		>0: a valid move is made, and tiles were combined to add to the overall score
+	*/
 	private int moveRight() {
 		int score = -1;
 		for (int i = 0; i < BOARD_SIZE; i++) {
@@ -316,6 +365,9 @@ public class Board {
 		return score;
 	}
 	
+	/*
+	*	legacy function to display the board in the console instead of the swing window
+	*/
 	public void show() {
 		for(int i = 0; i < BOARD_SIZE; i++) {
 			for(int j = 0; j < BOARD_SIZE; j++)

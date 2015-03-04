@@ -15,29 +15,6 @@ public class EventHandler implements KeyListener{
 	}
 
 	public void keyPressed(KeyEvent e) {
-		/*
-		int keyCode = e.getKeyCode();
-		long timeSinceLastPress = System.currentTimeMillis() - lastPress;
-		
-		if(timeSinceLastPress > keyDelay) {
-			if(keyCode == KeyEvent.VK_DOWN) {
-				gameBoard.execute(Board.Commands.MOVE_DOWN);
-				lastPress = System.currentTimeMillis();
-			}
-			if(keyCode == KeyEvent.VK_UP) {
-				gameBoard.execute(Board.Commands.MOVE_UP);
-				lastPress = System.currentTimeMillis();
-			}
-			if(keyCode == KeyEvent.VK_LEFT) {
-				gameBoard.execute(Board.Commands.MOVE_LEFT);
-				lastPress = System.currentTimeMillis();
-			}
-			if(keyCode == KeyEvent.VK_RIGHT) {
-				gameBoard.execute(Board.Commands.MOVE_RIGHT);
-				lastPress = System.currentTimeMillis();
-			}
-		}
-		*/
 	}
 
 	public void keyReleased(KeyEvent e) {

@@ -24,8 +24,10 @@ public class Game {
 		while(!done) {
 			startTicks = System.currentTimeMillis();
 			
+			// draw the game board
 			gameFrame.render();
 			
+			// regulate frame rate
 			try {
 				TimeUnit.MILLISECONDS.sleep(1000/60 - (System.currentTimeMillis() - startTicks));
 			} catch (InterruptedException e) {
